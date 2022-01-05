@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>672088471819-9e622em44bn07jddoj2clk1nc02fjnoh.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.672088471819-9e622em44bn07jddoj2clk1nc02fjnoh</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCSCwYftVHOgTRIQzhiNfVSMdLz_T3X3_0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>672088471819</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.SuperWeapon.LifeManager</string>
+	<key>PROJECT_ID</key>
+	<string>lifemanager-ed7ea</string>
+	<key>STORAGE_BUCKET</key>
+	<string>lifemanager-ed7ea.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:672088471819:ios:43125773402d1a565b8a0e</string>
+	<key>DATABASE_URL</key>
+	<string>https://lifemanager-ed7ea-default-rtdb.europe-west1.firebasedatabase.app</string>
+</dict>
+</plist>
