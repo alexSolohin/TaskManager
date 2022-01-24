@@ -7,24 +7,22 @@
 
 import SwiftUI
 
-struct TaskData: Identifiable, Hashable {
-    var id = UUID()
-    var name: String
-    var complete = false
-}
-
 struct TaskListView: View {
-   
     @State private var select = Set<UUID>()
-    
-    @State var tasks = [TaskData(name: "First task"),
-                        TaskData(name: "Second task"),
-                        TaskData(name: "Third task"),
-                        TaskData(name: "Four task")]
+    @State var tasks : [Task]
         
     var body: some View {
-        List(tasks, selection: $select) {task in
-            TaskView(task: task, select: $select, tasks: $tasks)
+        List {
+            Section(header: Text("To Do")) {
+                ForEach($tasks, id: \.NotDoneId) {task in
+                 TaskView(task: task, tasks: $tasks)
+                }
+            }
+//            Section(header: Text("Done")) {
+//                ForEach($tasks, id: \.doneId) {task in
+//                    TaskView(task: task, tasks: $tasks)
+//                }
+//            }
         }.listStyle(PlainListStyle()).animation(.easeInOut)
     }
     
@@ -40,33 +38,35 @@ struct TaskListView: View {
 }
 
 struct TaskView: View {
-    var task: TaskData
-    @State var color = Color.gray
-    @Binding var select: Set<UUID>
-    @Binding var tasks: [TaskData]
+    @Binding    var task: Task
+    @State      var done  = false
+    @Binding    var tasks: [Task]
     
     var body: some View {
-        TaskRect(name: task.name).listRowBackground(color).swipeActions(edge: .leading, content:{
+        TaskRect(name: task.name, index: tasks.firstIndex(of: task)).listRowBackground(done ? Color.green : Color.gray)
+            .swipeActions(edge: .leading, content:{
             Button{ complete() } label: {
                 Label("Complete", systemImage: "heart.fill")
             }.tint(.green)
-            }).swipeActions(edge: .trailing, content: {
+        })
+        .swipeActions(edge: .trailing, content: {
                 Button() { print("task") } label: {
                     Label("More", systemImage: "ellipsis.circle.fill")
                 }.tint(.indigo)
-                Button(role: .destructive) { tasks.remove(at: tasks.firstIndex(of: task)!)} label: {
+                Button(role: .destructive) {
+                    tasks.remove(at: tasks.firstIndex(of: task)!)} label: {
                     Label("Delete", systemImage: "trash.fill")
-                }.highPriorityGesture(DragGesture())
+                }
             })
     }
     
     func complete()
     {
-        color = Color.green
+        done = true
         let index = tasks.firstIndex(of: task)
         if (index != nil) {
             let elem = tasks.remove(at: index!)
-            tasks.insert(elem, at: tasks.count)
+            tasks.append(elem)
         }
     }
     
@@ -75,12 +75,13 @@ struct TaskView: View {
 
 struct TaskRect: View {
     var name: String
+    var index: Int?
     
     var body: some View {
             HStack {
                 VStack{
                     Text(name)
-                    Text("info").font(.subheadline)
+                    Text(String(index ?? 1000)).font(.subheadline)
                 }
                 Spacer()
                 Image(systemName: "heart.fill")
@@ -90,7 +91,7 @@ struct TaskRect: View {
 
 struct TaskListView_Previews: PreviewProvider {
     static var previews: some View {
-        TaskListView()
+        TaskListView(tasks: ProjectModel().projects[0].nameTasks)
 .previewInterfaceOrientation(.portrait)
     }
 }

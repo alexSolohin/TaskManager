@@ -25,7 +25,10 @@ struct NewProjectView: View {
         ZStack {
             RoundedRectangle(cornerRadius: 10).fill(Color("BarBackgroundColor")).frame(width: UIScreen.main.bounds.width - 30, height: 50)
                 .shadow(color: .gray, radius: 5, x: 0, y: 2)
-            Image(systemName: "plus").foregroundColor(.white)
+            Image(systemName: "plus")
+                .resizable()
+                .frame(width: 30, height: 30)
+                .foregroundColor(.white)
         }.frame(width: UIScreen.main.bounds.width, height: 50)
         
     }

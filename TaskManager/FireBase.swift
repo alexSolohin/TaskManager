@@ -8,18 +8,6 @@
 import Foundation
 import Firebase
 
-struct ProjectData: Codable {
-    var nameGoal : String
-    var nameTasks : [Task]
-    var isTaskCompleted : [Bool]
-}
-
-struct Task: Codable {
-    var name: String
-    var id : Int
-    var done : Bool
-}
-
 class FirebaseInitial {
     
     public var storageRef : StorageReference
@@ -36,7 +24,7 @@ class FirebaseInitial {
         self.projectsData = storageRef.child("ProjectData/ProjectData.json")
         
         //for test
-        let task = Task(name: "task", id: 0, done: false)
+        let task = Task(name: "task", done: false)
         let proj1 = ProjectData(nameGoal: "firstGoal", nameTasks: [task], isTaskCompleted: [false, false])
         let proj2 = ProjectData(nameGoal: "secondGoal", nameTasks: [task], isTaskCompleted: [false, false])
         projectsArr = [proj1, proj2]
@@ -77,25 +65,25 @@ class FirebaseInitial {
         return nil
     }
     
-    func DownLoadFileFromFB()
-    {
+    func DownLoadFileFromFB() -> [ProjectData] {
+        var projectArr: [ProjectData] = []
         // Create a reference to the file you want to download
         let islandRef = storageRef.child("ProjectData/ProjectData.json")
-
+        
         // Download in memory with a maximum allowed size of 1MB (1 * 1024 * 1024 bytes)
         islandRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
           if let error = error {
               print(error.localizedDescription)
           } else {
-            // Data for "images/island.jpg" is returned
             let data = data
             let json = String(decoding: data!, as: UTF8.self)
             let jsonData = json.data(using: .utf8)
             let decoder = JSONDecoder()
-            let projectArr: [ProjectData] = try! decoder.decode([ProjectData].self, from: jsonData!)
+            projectArr = try! decoder.decode([ProjectData].self, from: jsonData!)
               print(projectArr[0].nameGoal)
           }
         }
+        return projectArr
     }
     
     func UploadFile()
@@ -110,7 +98,7 @@ class FirebaseInitial {
         
         let uploadTask = projectDataRef.putData(data!, metadata: nil) { (metadata, error) in
           guard let metadata = metadata else {
-              print(error?.localizedDescription)
+              print(error?.localizedDescription as Any)
             // Uh-oh, an error occurred!
             return
           }

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19574" systemVersion="21C52" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Entity" representedClassName="Entity" syncable="YES" codeGenerationType="class"/>
+    <entity name="ProjectDataD" representedClassName="ProjectDataD" syncable="YES" codeGenerationType="class">
+        <attribute name="attribute" optional="YES" attributeType="Transformable"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="nameGoal" optional="YES" attributeType="String"/>
+        <attribute name="nameTasks" optional="YES" attributeType="Transformable"/>
+    </entity>
+    <entity name="Tasks" representedClassName="Tasks" syncable="YES" codeGenerationType="class"/>
+    <elements>
+        <element name="ProjectDataD" positionX="-113.0740966796875" positionY="-205.4984130859375" width="119.68017578125" height="103"/>
+        <element name="Tasks" positionX="121.638427734375" positionY="-71.36907958984375" width="128" height="29"/>
+        <element name="Entity" positionX="236.6567993164062" positionY="-305.2589263916016" width="128" height="29"/>
+    </elements>
+</model>
