@@ -9,12 +9,11 @@ import SwiftUI
 
 @main
 struct TaskManagerApp: App {
-    @StateObject private var aplicationData = AplicationData()
-   
+    @StateObject var projectModel = ProjectModel()
+       
     var body: some Scene {
         WindowGroup {
-            MainView()
-                .environment(\.managedObjectContext, aplicationData.container.viewContext)
+            MainView().environmentObject(projectModel)
             
         }
     }

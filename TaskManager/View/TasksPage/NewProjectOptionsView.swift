@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct NewProjectOptionsView: View {
-    @EnvironmentObject var projects:  ProjectModel
+
     @State var name = "New project ";
     
     var body: some View {
@@ -18,8 +18,6 @@ struct NewProjectOptionsView: View {
             }
             Spacer()
             Button("Create", action: {
-                let project = ProjectData(nameGoal: name, nameTasks: [], isTaskCompleted: [])
-                projects.projects.append(project)
             }).buttonStyle(.bordered)
         }
     }

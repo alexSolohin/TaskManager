@@ -15,7 +15,7 @@ class FirebaseInitial {
     public var jsonString = ""
     
     //for test
-    var projectsArr : [ProjectData]
+//    var projectsArr : [ProjectData]
     
     init() {
         FirebaseApp.configure()
@@ -24,16 +24,16 @@ class FirebaseInitial {
         self.projectsData = storageRef.child("ProjectData/ProjectData.json")
         
         //for test
-        let task = Task(name: "task", done: false)
-        let proj1 = ProjectData(nameGoal: "firstGoal", nameTasks: [task], isTaskCompleted: [false, false])
-        let proj2 = ProjectData(nameGoal: "secondGoal", nameTasks: [task], isTaskCompleted: [false, false])
-        projectsArr = [proj1, proj2]
+//        let task = Task(name: "task", done: false)
+//        let proj1 = ProjectData(nameGoal: "firstGoal", nameTasks: [task], isTaskCompleted: [false, false])
+//        let proj2 = ProjectData(nameGoal: "secondGoal", nameTasks: [task], isTaskCompleted: [false, false])
+//        projectsArr = [proj1, proj2]
     }
     
     public func CreateJson() {
         do {
-            let jsonData = try JSONEncoder().encode(projectsArr)
-            self.jsonString = String(data: jsonData, encoding: .utf8)!
+//            let jsonData = try JSONEncoder().encode(projectsArr)
+//            self.jsonString = String(data: jsonData, encoding: .utf8)!
             print(jsonString)
         } catch { print("False") }
     }
@@ -79,8 +79,8 @@ class FirebaseInitial {
             let json = String(decoding: data!, as: UTF8.self)
             let jsonData = json.data(using: .utf8)
             let decoder = JSONDecoder()
-            projectArr = try! decoder.decode([ProjectData].self, from: jsonData!)
-              print(projectArr[0].nameGoal)
+//            projectArr = try! decoder.decode([ProjectData].self, from: jsonData!)
+//              print(projectArr[0].nameProject)
           }
         }
         return projectArr

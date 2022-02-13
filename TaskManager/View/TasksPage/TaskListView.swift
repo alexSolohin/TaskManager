@@ -14,7 +14,7 @@ struct TaskListView: View {
     var body: some View {
         List {
             Section(header: Text("To Do")) {
-                ForEach($tasks, id: \.NotDoneId) {task in
+                ForEach($tasks, id: \.id) {task in
                  TaskView(task: task, tasks: $tasks)
                 }
             }
@@ -91,7 +91,9 @@ struct TaskRect: View {
 
 struct TaskListView_Previews: PreviewProvider {
     static var previews: some View {
-        TaskListView(tasks: ProjectModel().projects[0].nameTasks)
+        let task1 = Task(name: "First task", done: false)
+        let tasks = [task1!, task1!]
+        TaskListView(tasks: tasks)
 .previewInterfaceOrientation(.portrait)
     }
 }

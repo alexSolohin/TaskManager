@@ -10,9 +10,7 @@ import CoreData
 import Foundation
 
 struct MainView: View {
-    @Environment(\.managedObjectContext) var moc
-    @FetchRequest(sortDescriptors: []) var projects: FetchedResults<ProjectDataM>
-    
+    @EnvironmentObject var projectModel: ProjectModel
     
     init() {
         UITabBar.appearance().backgroundColor = UIColor.clear
@@ -20,21 +18,7 @@ struct MainView: View {
     
     var body: some View {
         VStack {
-            List(projects) { project in
-                Text(project.nameGoal ?? "Default")
-            }
-            Button("Add") {
-                let goalNames = ["First goal", "Second goal", "Third Goal"]
-                
-                let chooseGoal = goalNames.randomElement()!
-                
-                let project = ProjectDataM(context: moc)
-                project.id = UUID()
-                project.nameGoal = chooseGoal
-                
-                try? moc.save()
-                
-            }
+            Spacer()
             TabView {
                 TasksPageView().tabItem {
                     Image("TaskbarIcon")
@@ -52,20 +36,12 @@ struct MainView: View {
                     Text("setting")
                 }.tag(4)
             }.accentColor(.green).ignoresSafeArea()
-        }
-
-        
+        }.onAppear(perform: {
+            projectModel.getAllProjects()
+        })
     }
-
+    
 }
-
-extension View {
-    func Print(_ vars: Any...) -> some View {
-        for v in vars { print(v) }
-        return EmptyView()
-    }
-}
-
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {

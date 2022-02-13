@@ -7,58 +7,53 @@
 
 import Foundation
 import SwiftUI
+import CoreData
 
-struct ProjectData: Codable, Identifiable {
+public class Task: NSObject, Codable {
     var id = UUID()
-    var nameGoal : String
-    var nameTasks : [Task]
-    var isTaskCompleted : [Bool]
+    var name: String = ""
+    var done : Bool
+    
+    init?(name: String, done: Bool) {
+        self.name = name
+        self.done = done
+        super.init()
+    }
 }
 
-struct Task: Codable, Identifiable, Equatable {
-    var id = UUID()
-    var name: String
-    var done : Bool
+struct ProjectViewModel {
+    let project: ProjectData
+    
+    var id: NSManagedObjectID {
+        return project.objectID
+    }
+    
+    var projectName: String {
+        return project.projectName ?? ""
+    }
 }
 
 class ProjectModel: ObservableObject {
-    @Published var projects = [ProjectData]()
-    var firebase: FirebaseInitial = FirebaseInitial()
+    @Published var projects: [ProjectViewModel] = []
+    var text = ""
     
-    //for test
-    var testData1 = ProjectData(nameGoal: "first project", nameTasks: [Task(name: "First Task", done: false), Task(name: "Second Task", done: false)], isTaskCompleted: [])
-    var testData2 = ProjectData(nameGoal: "second project", nameTasks: [Task(name: "Second Task", done: false), Task(name: "Second Task", done: false)], isTaskCompleted: [])
-    var testData3 = ProjectData(nameGoal: "third project", nameTasks: [Task(name: "Third Task", done: false), Task(name: "Second Task", done: false)], isTaskCompleted: [])
+    func getAllProjects() {
+        projects = AplicationData.shared.GetAllProjects().map(ProjectViewModel.init)
+    }
     
-    init() {
-//        projects = self.firebase.DownLoadFileFromFB()
+    func save() {
+        let projectData = ProjectData(context: AplicationData.shared.viewContext)
+        projectData.projectName = text
         
-        //for test
-        projects.append(testData1)
-        projects.append(testData2)
-        projects.append(testData3)
+        AplicationData.shared.save()
     }
     
-    func AddNewProject(project: ProjectData) {
-        self.projects.append(project)
-    }
-    
-    func RemoveProject(project: ProjectData) {
-        let index = self.projects.firstIndex{$0.id == project.id}
-        if (index == nil) {
-            return
+    func delete(project: ProjectViewModel) {
+        let project = AplicationData.shared.getTaskByID(id: project.id)
+        if let project = project {
+            AplicationData.shared.deleteProject(project: project)
         }
-        self.projects.remove(at: index!)
     }
     
 }
 
-extension Task {
-    var doneId: String {
-        "done\(id)"
-    }
-    
-    var NotDoneId: String {
-        "Not done\(id)"
-    }
-}
